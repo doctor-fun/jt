@@ -1,0 +1,41 @@
+server:
+  port: 8093
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    #引入druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.110.52.14:3306/jtdb?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    username: root
+    password: 123456
+
+#mybatis-plush配置
+mybatis-plus:
+  type-aliases-package: com.jt.pojo
+  mapper-locations: classpath:/mybatis/mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  
+#引入日志信息
+logging:
+  level: 
+    com.jt.mapper: debug
+
+dubbo:
+  #包扫描
+  scan:
+    basePackages: com.jt
+  #服务名称
+  application:
+    name: provider-user
+    #注册中心
+  registry:
+    address: zookeeper://47.110.52.14:2181?backup=47.110.52.14:2182,47.110.52.14:2183
+  protocol:
+    #TCP/IP协议
+    name: dubbo
+    #在本server占用的服务端口是9000，dubbo将其封装转发到dubbo虚拟ip:20880
+    #dubbo提供给消费者的唯一端口信息，Notify urls for subscribe url provider://192.168.100.7:20880/
+    #om.jt.dubbo.service.UserService?anyhost=true&application=provider-
+    port: 20880
